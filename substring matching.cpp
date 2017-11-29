@@ -5,27 +5,19 @@ using namespace std;
 void computeLPS(string text,string pattern,int lps[])
 {
     int i=1;
-    int len=0;
+    int len;
     lps[0]=0;
     int m=pattern.size();
     while(i!=m)
     {
+        len=lps[i-1];
+        while(pattern[i]!=pattern[len] && len>0)
+            len=lps[len-1];
         if(pattern[i]=pattern[len])
-        {
-            len++;
-            lps[i]=len;
-            i++;
-        }
+            lps[i]=len+1;
         else
-        {
-            if(len==0)
-            {
-                lps[i]=0;
-                i++;
-            }
-            else
-                len=lps[len-1];
-        }
+            lps[i]=0;
+        i++;
     }
 }
 
@@ -49,28 +41,21 @@ vector <int> KMPsearch(string text,string pattern)
         {
             i++;
             j++;
+            if(j==m)
+                positions.push_back(i-j);
         }
-        else
-        {
-            if(j>0)
-                j=lps[j-1];
-            else
-                i++;
-        }
-        if(j==m)
-        {
-            positions.push_back(i-j);
+        else if(j>0)
             j=lps[j-1];
-        }
+        else
+            i++;
     }
     return positions;
 }
 
 int main()
 {
-    string text="ababababababababa";
-    string pattern="ab";
-    int i;
+    string text="aaabbaaaa";
+    string pattern="bb";
     /*
     for(i=0;i<10;i++)
         pattern+=pattern;
@@ -79,6 +64,11 @@ int main()
     cout << text.size();
     */
     vector <int> positions=KMPsearch(text,pattern);
-    for(i=0;i<positions.size();i++)
-        cout << positions[i] << " ";
+    if(positions.size()==0)
+        cout << "Not Found";
+    else
+    {
+        for(int i=0;i<positions.size();i++)
+            cout << positions[i] << " ";
+    }
 }
