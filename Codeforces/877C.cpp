@@ -5,14 +5,14 @@ int main()
 {
     int i,n;
     cin >> n;
-    if(n==2)
-    {
-        printf("3\n1 2 1");
-        return 0;
-    }
-    printf("%d\n",2*(n-1));
-    for(i=2;i<n+1;i++)
+    if(n&1)
+        printf("%d\n",(3*n-1)/2);
+    else
+        printf("%d\n",(3*n)/2);
+    for(i=2;i<n+1;i+=2)
         printf("%d ",i);
-    for(i=1;i<n;i++)
+    for(i=1;i<n+1;i+=2)
+        printf("%d ",i);
+    for(i=2;i<n+1;i+=2)
         printf("%d ",i);
 }
