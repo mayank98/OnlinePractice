@@ -1,33 +1,68 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define ll long long
+
 int main()
 {
-    long long a,b,f,k;
+    ll a,b,f,k;
     cin >> a >> b >> f >> k;
-    long long be=0,en=a,i1=b,i2;
-    long long i,ans=0;
-    bool poss=true;
-    for(i=0;i<k-1;i++)
+    ll ans=0;
+    ll fuel_left=b-f;
+    for(ll i=1;i<k;i++)
     {
-        if(i1>=f && (i1>=a || b>=a-f))
+        if(fuel_left<0)
         {
-            i2=i1-a;
-            if(i2>=a-f && (i2>=a || b>=f))
-            long long x=b-(a-f),y=i1-a;
+            cout << -1;
+            return 0;
+        }
+        if(i&1)
+        {
+            if(fuel_left<2*(a-f))
+            {
+                ans++;
+                fuel_left=b;
+            }
+            fuel_left-=2*(a-f);
         }
         else
         {
-            poss=false;
-            break;
+            if(fuel_left<2*f)
+            {
+                ans++;
+                fuel_left=b;
+            }
+            fuel_left-=2*f;
         }
-        be=a-be;
-        en=a-en;
-        f=a-f;
     }
-    if(b<f || b<a-f)
+    if(fuel_left<0)
     {
         cout << -1;
         return 0;
     }
+    if(k&1)
+    {
+        if(fuel_left<(a-f))
+        {
+            ans++;
+            fuel_left=b;
+        }
+        fuel_left-=(a-f);
+    }
+    else
+    {
+        if(fuel_left<f)
+        {
+            ans++;
+            fuel_left=b;
+        }
+        fuel_left-=f;
+    }
+    if(fuel_left<0)
+    {
+        cout << -1;
+        return 0;
+    }
+    else
+        cout << ans;
 }

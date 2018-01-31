@@ -35,7 +35,6 @@ int main()
                 temp2+=crit*(a+c-2*b);
             ans+=min(temp1,temp2);
         }
-
         cout << ans << endl;
     }
 }
