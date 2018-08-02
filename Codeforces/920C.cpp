@@ -27,28 +27,14 @@ int main()
             dp[i]=dp[i-1]+1;
     }
 
-    ll possible=true;
     for(i=0;i<n;i++)
     {
         ll pos=a[i]-1;
-        if(i>pos)
-        {
-            if(dp[i]<i-pos)
-            {
-                possible=false;
-                break;
-            }
-        }
-        else
-        {
-            if(dp[pos]<pos-i)
-            {
-                possible=false;
-                break;
-            }
-        }
+        if(dp[max(i,pos)]<abs(i-pos))
+            break;
     }
-    if(possible)
+
+    if(i==n)
         cout << "YES";
     else
         cout << "NO";
